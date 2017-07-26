@@ -3,14 +3,32 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+import java.util.Arrays;
+import java.util.Collection;
+
+@RunWith(Parameterized.class)
 public class Task1TestException {
+
+    @Parameterized.Parameters
+    public static Collection<Integer[][]> data() {
+        return Arrays.asList(new Integer[][][]{
+                {null, },
+                {{}, },
+                {{1, 2, 3}, },
+                {{1, 2, 3, 5, 6, 7, 8}, },
+        });
+    }
+
+    private Integer[] sourceArray;
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
 
-    public Task1TestException() {
-
+    public Task1TestException(Integer[] sourceArray) {
+        this.sourceArray = sourceArray;
     }
 
     Tasks tasks;
@@ -23,17 +41,7 @@ public class Task1TestException {
     }
 
     @Test
-    public void test1Task1() throws RuntimeException {
-        tasks.task1(null);
-    }
-
-    @Test
-    public void test2Task1() throws RuntimeException {
-        tasks.task1(new Integer[]{});
-    }
-
-    @Test
-    public void test3Task1() throws RuntimeException {
-        tasks.task1(new Integer[]{1, 2, 3});
+    public void testTask1() throws RuntimeException {
+        tasks.task1(sourceArray);
     }
 }
